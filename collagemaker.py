@@ -1,5 +1,7 @@
 import cv2
 from imutils import build_montages
+from PIL import Image
+import numpy
 
 
 def makecollage(imagepaths,filename,blockheight,blockwidth):
@@ -9,6 +11,10 @@ def makecollage(imagepaths,filename,blockheight,blockwidth):
     #Reading all images
     for imgpath in imagepaths:
         image = cv2.imread(imgpath)
+        if image is None:
+            imimage = Image.open(imgpath).convert('RGB')
+            image = cv2.cvtColor(numpy.array(imimage), cv2.COLOR_RGB2BGR)
+        
         images.append(image)
     # if len(images) < 10:
     #     col = len(images)
